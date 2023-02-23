@@ -1,0 +1,3 @@
+class LeaveWord < ApplicationRecord
+  
+end

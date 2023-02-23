@@ -1,0 +1,1 @@
+json.partial! 'api/admin/v1/product/products/product', product: @product

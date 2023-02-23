@@ -1,0 +1,1 @@
+json.partial! 'api/admin/v1/inquiry/inquiry_quotations/inquiry_quotation', quotation: @quotation

@@ -1,0 +1,1 @@
+json.value @system_setting.present? ? eval(@system_setting.value) : []

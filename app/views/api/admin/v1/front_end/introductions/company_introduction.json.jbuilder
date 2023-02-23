@@ -1,0 +1,1 @@
+json.value @system_setting.present? ? @system_setting.value : ""

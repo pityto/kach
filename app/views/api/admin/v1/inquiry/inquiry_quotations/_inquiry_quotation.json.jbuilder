@@ -1,0 +1,10 @@
+json.inquiry_id quotation.inquiry_id
+json.inquiry_quotation_id quotation.id
+json.vendor_company_name quotation.vendor_company_name
+json.price quotation.cost_price.to_f
+json.currency_type quotation.cp_currency_type
+json.package quotation.package
+json.purity quotation.purity
+json.stock quotation.stock
+json.note quotation.purchase_note
+json.created_at format_standard_time(quotation.created_at)

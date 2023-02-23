@@ -1,0 +1,1 @@
+json.partial! 'api/admin/v1/front_end/introductions/introduction', introduction: @introduction

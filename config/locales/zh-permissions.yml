@@ -1,0 +1,92 @@
+zh-CN:
+  permissions:
+    menu:
+      api:
+        admin:
+          v1:
+            hr: 人事管理
+            front_end: 前台中心
+            crm: 客户管理
+            product: 产品管理
+            inquiry: 询盘管理
+            customer_order: 订单管理
+    controller:
+      api:
+        admin:
+          v1:
+            hr:
+              employees: 员工管理
+              roles: 角色管理
+            front_end:
+              banners: Banner管理
+              logistics_infos: 物流信息管理
+              introductions: 前台公司信息管理
+            crm:
+              leave_words: 客户留言管理
+              customers: 客户管理
+            product:
+              products: 产品管理
+              advantage_products: 优势产品
+            inquiry:
+              inquiries: 询盘管理
+              inquiry_quotations: 采购报价
+            customer_order:
+              customer_orders: 订单管理
+    icon:
+      api:
+        admin:
+          v1:
+            hr: staff
+            front_end: front_end
+            crm: crm
+            product: product
+            inquiry: inquiry
+            customer_order: customer_order
+    operate:
+      manage:  '管理、菜单显示'
+      read:    '查看'
+      create:  '新增'
+      destroy: '删除'
+      update:  '修改'
+      show: '详情'
+      api:
+        admin:
+          v1:
+            hr:
+              employees:
+                role: 分配角色
+                update_role: 提交分配角色
+                sign_in: 登陆
+                sign_out: 登出
+              roles:
+                employee: 员工列表
+                permission: 分配权限
+                update_permission: 提交分配权限
+              teams:
+                employee: 员工列表
+            inquiry:
+              inquiries:
+                exchange_rate: 获取汇率
+                update_exchange_rate: 更新汇率
+                testing_fee: 获取检测费
+                update_testing_fee: 更新检测费
+                appraisal_fee: 获取运输报告鉴定费
+                update_appraisal_fee: 更新运输报告鉴定费
+                update_quotation: 修改询盘报价
+              inquiry_quotations:
+                create_quotation: 添加询盘报价
+                update_quotation: 修改询盘报价
+                quotation_details: 报价详情
+                create_customer_order: 创建客户订单
+                send_quotation: 发送报价 
+                quotation_histories: 历史报价
+            product:
+              products:
+                quotation_histories: 历史报价
+                classify: 获取产品分类
+                update_classify: 修改产品分类
+                import: 导入产品
+            front_end:
+              introductions:
+                company_introduction: 获取前台公司简介
+                update_company_introduction: 更新前台公司简介

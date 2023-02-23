@@ -1,0 +1,13 @@
+/config/database.yml
+/config/puma.rb
+/config/secrets.yml
+/tmp/*
+.rvmrc
+/log/*
+.tags
+.tags_sorted_by_file
+/public/.DS_Store
+/config/.DS_Store
+.DS_Store
+/public/tempfile
+/public/tempfile/*
