@@ -3,8 +3,8 @@ sdir = ENV['PWD']
 
 plugin :tmp_restart
 
-port 3000
-workers 4
+port 3002
+workers 2
 threads 5, 64
 environment 'production'
 directory dir
