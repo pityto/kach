@@ -5,7 +5,7 @@
     <title>Document</title>
   </head>
   <body>
-    <h2>Dear <%= @inquiry.first_name + " " + @inquiry.last_name %></h2>
+    <h2>Dear <%= @inquiry.first_name.to_s + " " + @inquiry.last_name.to_s %></h2>
     <p>
       Pls see the quote below for Quotation No. <%= @inquiry.inquiry_no %>
     </p>
@@ -33,7 +33,7 @@
             <td bgcolor="D6DDEE"><%= i+1  %></td>
             <td bgcolor="D6DDEE"><%= @inquiry.product_name %></td>
             <td bgcolor="D6DDEE"><%= @inquiry.cas %></td>
-            <td bgcolor="D6DDEE"><%= @inquiry.product.catalog_no %></td>
+            <td bgcolor="D6DDEE"><%= @inquiry.product&.catalog_no.to_s %></td>
             <td bgcolor="D6DDEE"><%= quo.package %></td>
             <td bgcolor="D6DDEE"><%= quo.price %></td>
             <td bgcolor="D6DDEE"><%= quo.purity %></td>

@@ -76,14 +76,13 @@ class Api::Admin::V1::Inquiry::InquiryQuotationsController < Api::Admin::V1::Api
   def send_quotation
     requires! :inquiry_quotation_ids, type: Array # 报价id数组
     
-
-    # inquiry_quotations = InquiryQuotation.where(id: params[:inquiry_quotation_ids])
-    # inquiry_quotations.each do|iq|
-    #   next if iq.inquiry.status == 1
-    #   iq.update(status: 1)
-    #   iq.inquiry.update(status: 1)
-    # end
-    CustomerMailer.quotation_email(InquiryQuotation.where(id: 8)).deliver_now
+    inquiry_quotations = InquiryQuotation.where(id: params[:inquiry_quotation_ids])
+    inquiry_quotations.each do|iq|
+      next if iq.inquiry.status == 1
+      iq.update(status: 1)
+      iq.inquiry.update(status: 1)
+    end
+    CustomerMailer.quotation_email(inquiry_quotations).deliver_now
   end
   
   private

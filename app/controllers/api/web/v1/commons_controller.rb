@@ -15,8 +15,14 @@ class Api::Web::V1::CommonsController < Api::Web::V1::ApiController
     optional! :first_name, type: String # 联系人名称
     requires! :phone, type: String # 电话
     requires! :email, type: String # 邮箱
-
-    @inquiry = ::Inquiry.new(cas: params[:cas], package: params[:package], purity: params[:purity], note: params[:note], company_name: params[:company_name], first_name: params[:first_name], phone: params[:phone], email: params[:email], source: 1)
+  
+    product = Product.find_by(cas: params[:cas])
+    @inquiry = ::Inquiry.new(package: params[:package], purity: params[:purity], note: params[:note], company_name: params[:company_name], first_name: params[:first_name], phone: params[:phone], email: params[:email], source: 1)
+    @inquiry.cas =  params[:cas]
+    if product.present?
+      @inquiry.product_id = product.id
+      @inquiry.product_name = product.name
+    end
     error_detail!(@inquiry) and return if !@inquiry.save
   end
 

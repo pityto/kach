@@ -3,7 +3,7 @@ class CustomerMailer < ApplicationMailer
   def quotation_email(inquiry_quotations)
     @inquiry_quotations = inquiry_quotations
     @inquiry = @inquiry_quotations.first.inquiry
-    to_mail = ["347637161@qq.com", "zsh347637161@gmail.com"]
+    to_mail = [@inquiry.email]
     mail(to: to_mail, subject: 'Thanks for Quote')
   end
 
