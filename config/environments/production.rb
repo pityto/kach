@@ -92,11 +92,13 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
+  
+  # 阿里云服务器屏蔽了25端口，这里换成465端口，并加上ssl参数
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :address => "smtp.163.com",
-    :port => 25,
+    :port => 465,
+    :ssl => true,
     :domain => "smtp.163.com",
     :authentication => :login,
     :user_name => "zhszxcv123@163.com",
