@@ -53,12 +53,12 @@
       Thanks so much for your PO, and we will ship it out as scheduled.
     </p>
     <p>
-      Any other questions,pls feel free to contact me.
+      Any other questions,pls feel free to contact me at <%= @customer_order.employee&.email.to_s %>.
     </p>
     <p>
       Best regards.
     </p>
-    <p><%= "Lily" %></p>
+    <p><%= @customer_order.employee&.name.to_s %></p>
     <p>Kchemical</p>
   </body>
 </html>

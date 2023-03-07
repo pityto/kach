@@ -5,3 +5,6 @@ json.company_name customer.company_name
 json.email customer.email
 json.phone customer.phone
 json.created_at format_standard_time(customer.created_at)
+json.employee_id customer.employee_id
+json.employee_name customer.employee&.name
+json.country customer.country

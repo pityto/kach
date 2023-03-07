@@ -1,6 +1,7 @@
 json.id employee.id
 json.username employee.username
 json.name employee.name
+json.email employee.email
 json.job_status employee.job_status
 json.joined_on format_standard_time(employee.joined_on)
 json.mobile employee.mobile

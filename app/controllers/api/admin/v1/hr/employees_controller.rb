@@ -21,6 +21,7 @@ class Api::Admin::V1::Hr::EmployeesController < Api::Admin::V1::ApiController
     requires! :password, type: String # 密码
     requires! :password_confirmation, type: String # 验证密码
     requires! :name, type: String # 名字
+    requires! :email, type: String # email
     requires! :job_status, type: Integer # 在职状态, 1:在职, -1:离职
     requires! :position_id, type: Integer # 职位,0-其它,1-销售,2-采购
     requires! :is_enabled, type: Integer # 是否启用，1-是，0-否
@@ -36,6 +37,7 @@ class Api::Admin::V1::Hr::EmployeesController < Api::Admin::V1::ApiController
 
   def update
     requires! :name, type: String # 名字
+    requires! :email, type: String # email
     requires! :job_status, type: Integer # 在职状态, 1:在职, -1:离职
     requires! :position_id, type: Integer # 职位,0-其它,1-销售,2-采购
     requires! :is_enabled, type: Integer # 是否启用，1-是，0-否
@@ -92,7 +94,7 @@ class Api::Admin::V1::Hr::EmployeesController < Api::Admin::V1::ApiController
 
   private
   def employee_params
-    params.permit(:username, :password, :password_confirmation, :name, :job_status, :position_id, :is_enabled, :joined_on, :mobile, :office_tel, :qq_num, :birthday)
+    params.permit(:username, :password, :password_confirmation, :name, :email, :job_status, :position_id, :is_enabled, :joined_on, :mobile, :office_tel, :qq_num, :birthday)
   end
 
   def set_employee

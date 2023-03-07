@@ -3,7 +3,7 @@ class Inquiry < ApplicationRecord
   has_many :inquiry_quotations
   belongs_to :product
   belongs_to :customer
-
+  belongs_to :employee
   before_create :auto_create_fields
   after_save :update_relation_info, if: -> { self.saved_change_to_product_id? || self.saved_change_to_customer_id?}
   

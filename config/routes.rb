@@ -49,7 +49,21 @@ Rails.application.routes.draw do
 
         namespace :crm do
           resources :leave_words, only: [:index]
-          resources :customers, only: [:index, :create, :update, :destroy]
+          resources :customers, only: [:index, :create, :update, :destroy] do
+            member do
+              # 地址信息接口
+              get :addresses
+              post :new_address
+              put :update_address
+              delete :delete_address
+              # 收票地址信息接口
+              get :invoices
+              post :new_invoice
+              put :update_invoice
+              delete :delete_invoice
+              put :distribute_employee
+            end
+          end
         end
 
         namespace :product do
@@ -75,16 +89,18 @@ Rails.application.routes.draw do
               put :update_testing_fee
               get :appraisal_fee
               put :update_appraisal_fee
+              put :send_quotation
             end
             member do
               # get :quotation_details
               put :update_quotation
+              put :distribute_employee
+              put :relate_customer
             end
           end
           resources :inquiry_quotations, only: [:index, :show] do
             collection do
               post :create_customer_order
-              put :send_quotation
             end
             member do
               get :quotation_details
@@ -96,7 +112,11 @@ Rails.application.routes.draw do
         end
 
         namespace :customer_order do
-          resources :customer_orders, only: [:index]
+          resources :customer_orders, only: [:index] do
+            member do
+              put :received_amount
+            end
+          end
         end
 
         namespace :hr do

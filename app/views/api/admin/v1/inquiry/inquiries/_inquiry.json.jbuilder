@@ -15,3 +15,9 @@ json.status inquiry.status
 json.send_quotation_at format_standard_time(inquiry.send_quotation_at)
 json.note inquiry.note.to_s
 json.source inquiry.source
+json.employee_id inquiry.employee_id
+json.employee_name inquiry.employee&.name
+
+json.inquiry_quotations inquiry.inquiry_quotations do |quotation|
+  json.partial! 'api/admin/v1/inquiry/inquiries/inquiry_quotation', quotation: quotation
+end

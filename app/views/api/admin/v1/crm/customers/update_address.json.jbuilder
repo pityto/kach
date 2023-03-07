@@ -1,0 +1,1 @@
+json.partial! 'api/admin/v1/crm/customers/address', address: @address

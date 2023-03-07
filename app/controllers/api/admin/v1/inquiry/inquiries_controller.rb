@@ -1,5 +1,5 @@
 class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiController
-  before_action :set_inquiry, only: [:update, :show]
+  before_action :set_inquiry, only: [:update, :show, :distribute_employee, :relate_customer]
 
   def index
     optional! :q, type: String # 产品名称或cas号
@@ -8,7 +8,11 @@ class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiControll
     optional! :page, type: Integer # 页码
     optional! :limit, type: Integer # 单页条数
     
-    @inquiries = ::Inquiry
+    if current_employee.admin?
+      @inquiries = ::Inquiry.all
+    else
+      @inquiries = ::Inquiry.where(employee_id: current_employee.id)
+    end
     @inquiries = @inquiries.where("inquiry_no like '#{params[:inquiry_no]}%'") if params[:inquiry_no].present?
     if params[:q].present?
       term = ActionController::Base.helpers.sanitize(params[:q].to_s.strip, tags: [])
@@ -33,6 +37,7 @@ class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiControll
     ::Product.find(params[:product_id])
     ::Customer.find(params[:customer_id])
     @inquiry = ::Inquiry.new inquiries_params
+    @inquiry.employee_id = current_employee.id
     error_detail!(@inquiry) and return if !@inquiry.save
   end
 
@@ -125,10 +130,42 @@ class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiControll
     @quotation = ::InquiryQuotation.find(params[:inquiry_quotation_id])
     cost_price_usd = @quotation.get_cost_price_usd
     total_price = cost_price_usd + params[:profit].to_f + params[:shipping_fee].to_f + params[:operating_fee].to_f + params[:testing_fee].to_f + params[:declare_fee].to_f + params[:appraisal_fee].to_f + params[:bank_fee].to_f
-    error!("成本费与其他相关费用相加值和price参数值不符", 20007) if params[:price].to_f != total_price
+    error!("成本费与其他相关费用相加值和price参数值不符", 20007) and return if params[:price].to_f != total_price
     quo_params = inquiry_quotation_params
     quo_params[:exchange_rate] = @quotation.get_exchange_rate
     error_detail!(@quotation) if !@quotation.update(quo_params)
+  end
+
+  def send_quotation
+    requires! :inquiry_quotation_ids, type: Array # 报价id数组
+    
+    inquiry_quotations = InquiryQuotation.where(id: params[:inquiry_quotation_ids])
+
+    customers = []
+    @inquiry_quotations.each {|v| customers << v.inquiry.customer_id}
+    error!("询盘需要先关联客户信息才能发送报价", 20007) and return if nil.in?(customers.uniq)
+    error!("只能选择相同客户的询盘信息才能发送报价", 20007) and return if customers.uniq.count > 1
+    
+    inquiry_quotations.each do|iq|
+      next if iq.inquiry.status == 1
+      iq.update(status: 1)
+      iq.inquiry.update(status: 1)
+    end
+    CustomerMailer.quotation_email(inquiry_quotations).deliver_now
+  end
+
+  def distribute_employee
+    requires! :employee_id, type: Integer # 员工id
+
+    error!("只有管理员才能分配客询盘订单负责人", 20007) and return if !current_employee.admin?
+    @inquiry.update(employee_id: params[:employee_id].to_i)
+  end
+
+  def relate_customer
+    requires! :customer_id, type: Integer # 客户id
+
+    error!("只有前台用户下的询盘订单可以关联客户", 20007) and return if @inquiry.source == 0
+    @inquiry.update(customer_id: params[:customer_id].to_i)
   end
 
   private

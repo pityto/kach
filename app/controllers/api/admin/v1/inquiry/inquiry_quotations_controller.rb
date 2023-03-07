@@ -35,6 +35,10 @@ class Api::Admin::V1::Inquiry::InquiryQuotationsController < Api::Admin::V1::Api
     optional! :note, type: String # 客户备注
 
     inquiry_quotations = InquiryQuotation.where(id: params[:inquiry_quotation_ids])
+
+    customers = []
+    inquiry_quotations.each {|v| customers << v.inquiry.customer_id}
+    error!("询盘需要先关联客户信息才能创建订单", 20007) and return if nil.in?(customers.uniq)
     error!("该询盘已成单", 20007) and return if inquiry_quotations.map(&:customer_order_id).compact.present?
     if params[:inquiry_quotation_ids].size > 1
       error!("只能勾选同一询盘的报价成单", 20007) and return if inquiry_quotations.map(&:inquiry_id).uniq.size != 1
@@ -45,15 +49,20 @@ class Api::Admin::V1::Inquiry::InquiryQuotationsController < Api::Admin::V1::Api
 
     ActiveRecord::Base.transaction do
       customer_order = ::CustomerOrder.new
+      # 客户信息需要先手动关联客户才能创建订单，这里自动创建的逻辑取消
       # 客户信息不存在时（通过前台下的询盘），先创建用户信息
-      if inquiry.customer_id.present?
-        customer_order.customer_id = inquiry.customer_id
-      else
-        custemer = Customer.create(first_name: inquiry.first_name, last_name: inquiry.last_name, phone: inquiry.phone, company_name: inquiry.company_name, email: inquiry.email)
-        customer_order.customer_id = custemer.id
-      end
+      # if inquiry.customer_id.present?
+      #   customer_order.customer_id = inquiry.customer_id
+      # else
+      #   custemer = Customer.create(first_name: inquiry.first_name, last_name: inquiry.last_name, phone: inquiry.phone, company_name: inquiry.company_name, email: inquiry.email)
+      #   customer_order.customer_id = custemer.id
+      # end
+      customer_order.customer_id = inquiry.customer_id
+
+      # 订单的创建员工为订单的负责人
+      customer_order.employee_id = current_employee.id
       customer_order.currency_type = inquiry_quotation.currency_type
-      customer_order.amount = inquiry_quotations.map(&:price_invoice).sum.to_d
+      customer_order.amount = inquiry_quotations.map(&:price).sum.to_d
       customer_order.payment_type = params[:payment_type].to_i
       customer_order.note = params[:note] if params[:note].present?
       customer_order.invoice_type = params[:invoice_type].to_i
@@ -65,24 +74,13 @@ class Api::Admin::V1::Inquiry::InquiryQuotationsController < Api::Admin::V1::Api
         quo.customer_order_id = customer_order.id
         quo.save
       end
+      CustomerMailer.order_confirm_email(customer_order).deliver_now
     end
     @message = '销售订单创建成功'
   end
 
   def show
     @inquiry_quotations = @inquiry.inquiry_quotations
-  end
-
-  def send_quotation
-    requires! :inquiry_quotation_ids, type: Array # 报价id数组
-    
-    inquiry_quotations = InquiryQuotation.where(id: params[:inquiry_quotation_ids])
-    inquiry_quotations.each do|iq|
-      next if iq.inquiry.status == 1
-      iq.update(status: 1)
-      iq.inquiry.update(status: 1)
-    end
-    CustomerMailer.quotation_email(inquiry_quotations).deliver_now
   end
   
   private

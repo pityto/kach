@@ -1,5 +1,5 @@
 class Api::Admin::V1::Crm::LeaveWordsController < Api::Admin::V1::ApiController
-
+    
   def index
     optional! :first_name, type: String # first_name
     optional! :last_name, type: String # last_name

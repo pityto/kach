@@ -31,9 +31,9 @@
         <% @inquiry_quotations.each_with_index do |quo,i| %>
           <tr>
             <td bgcolor="D6DDEE"><%= i+1  %></td>
-            <td bgcolor="D6DDEE"><%= @inquiry.product_name %></td>
-            <td bgcolor="D6DDEE"><%= @inquiry.cas %></td>
-            <td bgcolor="D6DDEE"><%= @inquiry.product&.catalog_no.to_s %></td>
+            <td bgcolor="D6DDEE"><%= quo.inquiry.product_name %></td>
+            <td bgcolor="D6DDEE"><%= quo.inquiry.cas %></td>
+            <td bgcolor="D6DDEE"><%= quo.inquiry.product&.catalog_no.to_s %></td>
             <td bgcolor="D6DDEE"><%= quo.package %></td>
             <td bgcolor="D6DDEE"><%= quo.price %></td>
             <td bgcolor="D6DDEE"><%= quo.purity %></td>
@@ -52,7 +52,7 @@
     <p>
       Thanks and look forward to your feedbacks.
     </p>
-    <p><%= "Lily" %></p>
+    <p><%= @inquiry.employee&.name.to_s %></p>
     <p>Kchemical</p>
   </body>
 </html>
