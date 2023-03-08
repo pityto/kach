@@ -68,6 +68,8 @@ Rails.application.configure do
     :domain => "smtp.163.com",
     :authentication => :login,
     :user_name => "zhszxcv123@163.com",
-    :password => "TDWJIFWHYNQXHRLS",
+    :password => CONFIG.smtp_password
   }
+
+  
 end

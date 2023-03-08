@@ -96,12 +96,12 @@ Rails.application.configure do
   # 阿里云服务器屏蔽了25端口，这里换成465端口，并加上ssl参数
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    :address => "smtp.163.com",
+    :address => "smtp.exmail.qq.com",
     :port => 465,
     :ssl => true,
-    :domain => "smtp.163.com",
+    :domain => "smtp.exmail.qq.com",
     :authentication => :login,
-    :user_name => "zhszxcv123@163.com",
-    :password => "TDWJIFWHYNQXHRLS",
+    :user_name => "quotation@kachann.com",
+    :password => CONFIG.smtp_password
   }
 end
