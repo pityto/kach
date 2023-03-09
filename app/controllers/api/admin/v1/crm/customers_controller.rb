@@ -25,7 +25,7 @@ class Api::Admin::V1::Crm::CustomersController < Api::Admin::V1::ApiController
     @customers = @customers.where("company_name like '%#{params[:company_name]}%'") if params[:company_name].present?
     @customers = @customers.where("email like '%#{params[:email]}%'") if params[:email].present?
     @customers = @customers.where("country like '%#{params[:country]}%'") if params[:country].present?
-    @customers = @customers.page(param_page).per(param_limit)
+    @customers = @customers.order(created_at: :desc).page(param_page).per(param_limit)
   end
 
   def create
