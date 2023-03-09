@@ -12,7 +12,9 @@ json.note customer_order.note
 json.ship_address customer_order.ship_address
 json.invoice_address customer_order.invoice_address
 json.created_at format_standard_time(customer_order.created_at)
-inquiry = customer_order.inquiry_quotations.first.inquiry
+quotation = customer_order.inquiry_quotations.first
+inquiry = quotation.inquiry
+json.incoterms quotation.incoterms
 json.product_id inquiry.product_id
 json.cas inquiry.cas
 json.product_name inquiry.product_name

@@ -142,7 +142,7 @@ class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiControll
     inquiry_quotations = InquiryQuotation.where(id: params[:inquiry_quotation_ids])
 
     customers = []
-    @inquiry_quotations.each {|v| customers << v.inquiry.customer_id}
+    inquiry_quotations.each {|v| customers << v.inquiry.customer_id}
     error!("询盘需要先关联客户信息才能发送报价", 20007) and return if nil.in?(customers.uniq)
     error!("只能选择相同客户的询盘信息才能发送报价", 20007) and return if customers.uniq.count > 1
     
