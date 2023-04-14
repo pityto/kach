@@ -10,7 +10,6 @@ class Ability
           can permission.action.to_sym, permission.controller
         end
       end
-      can :update, 'api/admin/v1/hr/employees'
     end
   end
 
