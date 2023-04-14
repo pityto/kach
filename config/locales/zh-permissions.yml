@@ -43,8 +43,8 @@ zh-CN:
             inquiry: inquiry
             customer_order: customer_order
     operate:
-      manage:  '管理、菜单显示'
-      read:    '查看'
+      manage:  '所有权限'
+      read:    '菜单显示'
       create:  '新增'
       destroy: '删除'
       update:  '修改'

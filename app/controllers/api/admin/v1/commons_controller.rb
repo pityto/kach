@@ -9,7 +9,7 @@ class Api::Admin::V1::CommonsController < Api::Admin::V1::ApiController
         @ids << per.id if per.present?
       end
     end
-    condition = @ids.present? ? "action = 'manage' or id in (#{@ids.join(',')})" : "action = 'manage'"
+    condition = @ids.present? ? "action = 'read' or id in (#{@ids.join(',')})" : "action = 'read'"
     if current_employee.admin?
       @permissions = Permission.all
     else
