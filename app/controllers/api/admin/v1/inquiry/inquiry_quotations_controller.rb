@@ -17,6 +17,7 @@ class Api::Admin::V1::Inquiry::InquiryQuotationsController < Api::Admin::V1::Api
       if cas.present?
         @inquiries = @inquiries.where(cas: cas)
       elsif term.present?
+        term = term.gsub("'", "\\\\'") if term =~ /'/
         @inquiries = @inquiries.where("product_name like '%#{term}%'")
       end
     end

@@ -9,6 +9,7 @@ class Api::Admin::V1::SearchsController < Api::Admin::V1::ApiController
     if cas.present?
       @results = ::Product.where(cas: cas).page(param_page).per(param_limit)
     elsif @term.present?
+      @term = @term.gsub("'", "\\\\'") if @term =~ /'/
       @results = ::Product.where("name like '%#{@term}%'").page(param_page).per(param_limit)
     end
   end

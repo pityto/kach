@@ -48,11 +48,12 @@ class Api::Web::V1::CommonsController < Api::Web::V1::ApiController
     @products = ::Product.all
 
     if params[:q].present?
-      term = ActionController::Base.helpers.sanitize(params[:q].to_s.strip, tags: [])
-      cas = Utils.check_cas(term.scan(/\d+-\d+-\d/).flatten.first.to_s)
+      @term = ActionController::Base.helpers.sanitize(params[:q].to_s.strip, tags: [])
+      cas = Utils.check_cas(@term.scan(/\d+-\d+-\d/).flatten.first.to_s)
       if cas.present?
         @products = @products.where(cas: cas)
       elsif @term.present?
+        @term = @term.gsub("'", "\\\\'") if @term =~ /'/
         @products = @products.where("name like '%#{@term}%'")
       end
     end
