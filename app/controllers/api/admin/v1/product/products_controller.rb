@@ -10,6 +10,7 @@ class Api::Admin::V1::Product::ProductsController < Api::Admin::V1::ApiControlle
     
     @products = ::Product.all
     @products = @products.where("cas like '#{params[:cas]}%'") if params[:cas].present?
+    params[:name] = params[:name].gsub("'", "\\\\'") if params[:name] =~ /'/
     @products = @products.where("name like '%#{params[:name]}%'") if params[:name].present?
     @products = @products.where(is_advantage: params[:is_advantage].to_i) if params[:is_advantage].present?
     @products = @products.page(param_page).per(param_limit)
