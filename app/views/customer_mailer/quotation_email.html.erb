@@ -15,16 +15,16 @@
         <th bgcolor="D6DDEE">No.</th>
         <th bgcolor="D6DDEE">Product Name</th>
         <th bgcolor="D6DDEE">Cas No.</th>
-        <th bgcolor="D6DDEE">Cat_No.</th>
+        <!-- <th bgcolor="D6DDEE">Cat_No.</th> -->
         <th bgcolor="D6DDEE">Quantity</th>
         <th bgcolor="D6DDEE"><p style="color:#FF0000">CIF/EXW/FOB</p> Price</th>
         <th bgcolor="D6DDEE">Purity</th>
         <th bgcolor="D6DDEE">Stock/Customization</th>
         <th bgcolor="D6DDEE">Hazardous/Non-Haz</th>
-        <th bgcolor="D6DDEE">Appearance</th>
+        <!-- <th bgcolor="D6DDEE">Appearance</th> -->
         <th bgcolor="D6DDEE">Storage</th>
-        <th bgcolor="D6DDEE">Country of Origin</th>
-        <th bgcolor="D6DDEE">HS Code</th>
+        <!-- <th bgcolor="D6DDEE">Country of Origin</th> -->
+        <!-- <th bgcolor="D6DDEE">HS Code</th> -->
         <th bgcolor="D6DDEE">Remarks</th>
       </thead>
       <tbody>
@@ -33,16 +33,16 @@
             <td bgcolor="D6DDEE"><%= i+1  %></td>
             <td bgcolor="D6DDEE"><%= quo.inquiry.product_name %></td>
             <td bgcolor="D6DDEE"><%= quo.inquiry.cas %></td>
-            <td bgcolor="D6DDEE"><%= quo.inquiry.product&.catalog_no.to_s %></td>
+            <!-- <td bgcolor="D6DDEE"><%= quo.inquiry.product&.catalog_no.to_s %></td> -->
             <td bgcolor="D6DDEE"><%= quo.package %></td>
             <td bgcolor="D6DDEE"><%= quo.price %></td>
             <td bgcolor="D6DDEE"><%= quo.purity %></td>
             <td bgcolor="D6DDEE"><%= quo.is_customized? ? "Customization." : "Stock." + quo.stock.to_s %></td>
             <td bgcolor="D6DDEE"><%= quo.is_dangerous? ? "Hazardous" : "Non-Haz" %></td>
-            <td bgcolor="D6DDEE"><%= quo.appear_shape %></td>
+            <!-- <td bgcolor="D6DDEE"><%= quo.appear_shape %></td> -->
             <td bgcolor="D6DDEE"><%= quo.storage %></td>
-            <td bgcolor="D6DDEE"><%= quo.country %></td>
-            <td bgcolor="D6DDEE"><%= quo.hs_code %></td>
+            <!-- <td bgcolor="D6DDEE"><%= quo.country %></td> -->
+            <!-- <td bgcolor="D6DDEE"><%= quo.hs_code %></td> -->
             <td bgcolor="D6DDEE"><%= quo.note %></td>
           <tr>
         <% end %>

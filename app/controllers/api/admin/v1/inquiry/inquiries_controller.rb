@@ -5,6 +5,7 @@ class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiControll
     optional! :q, type: String # 产品名称或cas号
     optional! :inquiry_no, type: String # 询盘编号
     optional! :company_name, type: String # 客户公司名称
+    optional! :status, type: String # 询盘状态，0-未报价，1-已发送报价，2-已完成，3-已放弃，4-采购已报价
     optional! :page, type: Integer # 页码
     optional! :limit, type: Integer # 单页条数
     
@@ -25,6 +26,7 @@ class Api::Admin::V1::Inquiry::InquiriesController < Api::Admin::V1::ApiControll
       end
     end
     @inquiries = @inquiries.where("company_name like '%#{params[:company_name]}%'") if params[:company_name].present?
+    @inquiries = @inquiries.where(status: params[:status].to_i) if params[:status].present?
     @inquiries = @inquiries.order(created_at: :desc).page(param_page).per(param_limit)
   end
 

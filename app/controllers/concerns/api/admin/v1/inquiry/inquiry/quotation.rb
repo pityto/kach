@@ -30,6 +30,7 @@ module Api
               @quotation.stock = quotation_params[:stock] if quotation_params[:stock].present?
               @quotation.purchase_note = quotation_params[:note] if quotation_params[:note].present?
               error_detail!(@quotation) and return if !@quotation.save
+              inquiry.update(status: 4) if inquiry.status == 0
             end
 
             def update_quotation
